@@ -27,9 +27,31 @@ public class Ejercicios {
      * Explicación: Ambas cadenas tienen los mismos caracteres con la misma
      * frecuencia.
      */
-    public static boolean areAnagrams(String str1, String str2) {
-        throw new UnsupportedOperationException("Not implemented yet");
 
+    public static boolean areAnagrams(String str1, String str2) {
+        if (str1.length() != str2.length()) {
+            return false;
+        }
+
+        HashMap<Character, Integer> charCount = new HashMap<>();
+
+        // Contar caracteres en str1
+        for (char c : str1.toCharArray()) {
+            charCount.put(c, charCount.getOrDefault(c, 0) + 1);
+        }
+
+        // Restar los caracteres según str2
+        for (char c : str2.toCharArray()) {
+            if (!charCount.containsKey(c)) {
+                return false;
+            }
+            charCount.put(c, charCount.get(c) - 1);
+            if (charCount.get(c) == 0) {
+                charCount.remove(c);
+            }
+        }
+
+        return charCount.isEmpty();
     }
 
     /*
@@ -47,7 +69,21 @@ public class Ejercicios {
      * Input: nums = [9,2,3,6], objetivo = 10
      * Output: null
      */
+
     public int[] sumatoriaDeDos(int[] nums, int objetivo) {
-        throw new UnsupportedOperationException("Not implemented yet");
+
+        HashMap<Integer, Integer> mapa = new HashMap<>();
+
+        for (int i = 0; i < nums.length; i++) {
+            int complemento = objetivo - nums[i];
+
+            if (mapa.containsKey(complemento)) {
+                return new int[]{mapa.get(complemento), i};
+            }
+
+            mapa.put(nums[i], i);
+        }
+
+        return null; // No se encontró una solución
     }
 }
